@@ -155,17 +155,17 @@ asm volatile("outb %0, %1" : : "a"(data), "Nd"(port));
 
 void move_cursor(uint16 pos)
 {
-outb(0x3D4, 14);
-outb(0x3D5, ((pos >> & 0x00FF));
-outb(0x3D4, 15);
-outb(0x3D5, pos & 0x00FF);
+  outb(0x3D4, 14);
+  outb(0x3D5, ((pos >> 8) & 0x00FF));
+  outb(0x3D4, 15);
+  outb(0x3D5, pos & 0x00FF);
 }
 
 void move_cursor_next_line()
 {
-cursor_pos = 80 * cursor_next_line_index;
-cursor_next_line_index++;
-move_cursor(cursor_pos);
+  cursor_pos = 80 * cursor_next_line_index;
+  cursor_next_line_index++;
+  move_cursor(cursor_pos);
 }
 
 char get_input_keycode()
@@ -376,23 +376,23 @@ return get_ascii_char(keycode);
 
 void read_numbers(int *day, int *month,int *year)
 { 
-
-print_string("Enter a day : ");
-sleep(CALC_SLEEP);
-*day = read_int();
-sleep(CALC_SLEEP);
-print_string("Enter a month : ");
-sleep(CALC_SLEEP);
-*month = read_int();
-sleep(CALC_SLEEP);
-print_string("Enter a year : ");
-sleep(CALC_SLEEP);
-*year = read_int();
+  
+  print_string("Enter a day : ");
+  sleep(CALC_SLEEP);
+  *day = read_int();
+  sleep(CALC_SLEEP);
+  print_string("Enter a month : ");
+  sleep(CALC_SLEEP);
+  *month = read_int();
+  sleep(CALC_SLEEP);
+  print_string("Enter a year : ");
+  sleep(CALC_SLEEP);
+  *year = read_int();
 }
 
 void array_sum(){
 
-clear_screen();
+ clear_screen();
 init_vga_fore(BLUE);
 print_string("\n^^...Enter the size of array ...^^ \n");
 sleep(CALC_SLEEP);
@@ -405,18 +405,18 @@ int sum=0;
 int max=0;
 sleep(CALC_SLEEP);
 for(int i=0;i<size;i++)
-{ 
-init_vga_fore(BLACK);
-print_string("\nEnter the elements : ");
-init_vga_fore(RED);
-a[i]=read_int();
-sleep(CALC_SLEEP);
-sum=sum+a[i];
-if(a[i]>max)
-max=a[i];
-}
-sleep(CALC_SLEEP);
-init_vga_fore(GREEN);
+ { 
+    init_vga_fore(BLACK);
+   print_string("\nEnter the elements : ");
+   init_vga_fore(RED);
+   a[i]=read_int();
+   sleep(CALC_SLEEP);
+   sum=sum+a[i];
+   if(a[i]>max)
+      max=a[i];
+ }
+ sleep(CALC_SLEEP);
+ init_vga_fore(GREEN);
 print_string("\n\nThe Sum of Elements Of Arrays : ");
 print_int(sum);
 print_string("\n\nThe maximum Element in Arrays : ");
@@ -426,110 +426,110 @@ print_int(max);
 
 
 void calcualte_age(){
-clear_screen();
-int day,month,year,dayl,monthl,yearl,agey,agem,aged;
-//agey :your age of year
-//agem :your age of month
-//aged :your age of days
+ clear_screen();
+ int day,month,year,dayl,monthl,yearl,agey,agem,aged;
+	//agey :your age of year
+	//agem :your age of month
+	//aged :your age of days
+	
 
+	  
+       init_vga_fore(BRIGHT_MAGENTA);
+	   print_string("             .....Welcome Dear User..... ");
 
+       init_vga_fore(BLACK);
+       print_string("\n\nOK... Now will calculate your ");
+       print_string("age and your age stage.......\n");
 
-init_vga_fore(BRIGHT_MAGENTA);
-print_string(" .....Welcome Dear User..... ");
+           
+       print_string("\n\n^^Please Enter the data of the current day ,");             
+       print_string("then the month ,\nthen the year^^\n\n");       sleep(CALC_SLEEP);
 
-init_vga_fore(BLACK);
-print_string("\n\nOK... Now will calculate your ");
-print_string("age and your age stage.......\n");
+       init_vga_fore(RED);
 
+       read_numbers(&day,&month,&year);     
 
-print_string("\n\n^^Please Enter the data of the current day ,"); 
-print_string("then the month ,\nthen the year^^\n\n"); sleep(CALC_SLEEP);
+       init_vga_fore(BLACK);
 
-init_vga_fore(RED);
+       print_string("\n\n^^Please Enter the data of birth day ");
+       print_string(",then the month ,\nthen the year^^\n\n");
 
-read_numbers(&day,&month,&year); 
+       sleep(CALC_SLEEP);
+       init_vga_fore(RED);
+       read_numbers(&dayl,&monthl,&yearl);     
 
-init_vga_fore(BLACK);
+    	     if (day<dayl)
+    	     {
+	    	   day= day + 30 ;
+		       month = month - 1 ;
+    	     }
+ 
+	         if (month < monthl)
+    	    {
+		       month = month + 12 ;
+               year = year - 1 ;
+	         }
 
-print_string("\n\n^^Please Enter the data of birth day ");
-print_string(",then the month ,\nthen the year^^\n\n");
+	         aged = day - dayl ;
+	         agem = month - monthl ;
+	         agey = year - yearl ;
+			
+	
+            init_vga_fore( BLACK);
 
-sleep(CALC_SLEEP);
-init_vga_fore(RED);
-read_numbers(&dayl,&monthl,&yearl); 
+		    print_string("\n\n^^...Your Age :");
+            print_int(agey);
+            print_string(" year ");
+            print_int(agem);
+            print_string(" month ");
+            print_int(aged);
+            print_string(" day .");
+            
+       
+		
+		
+		   if(agey>=0&&agey<=17)
+		        print_string("\n^^..YOU ARE NOW IN CHILDHOOD..^^");
+		   else if(agey>=18&&agey<=30)
+		        print_string("\n^^..YOU ARE NOW IN ADOLESCENCE..^^");
+		   else if(agey>=31&&agey<=60)
+		        print_string("\n^^..YOU ARE NOW IN YOUNG STAGE..^^");
+		   else 
+	        	print_string("\n^^..YOU ARE NOW IN THE OLD AGE STAGE..^^");  
 
-if (day<dayl)
-{
-day= day + 30 ;
-month = month - 1 ;
-}
+   
 
-if (month < monthl)
-{
-month = month + 12 ;
-year = year - 1 ;
-}
-
-aged = day - dayl ;
-agem = month - monthl ;
-agey = year - yearl ;
-
-
-init_vga_fore( BLACK);
-
-print_string("\n\n^^...Your Age :");
-print_int(agey);
-print_string(" year ");
-print_int(agem);
-print_string(" month ");
-print_int(aged);
-print_string(" day .");
-
-
-
-
-if(agey>=0&&agey<=17)
-print_string("\n^^..YOU ARE NOW IN CHILDHOOD..^^");
-else if(agey>=18&&agey<=30)
-print_string("\n^^..YOU ARE NOW IN ADOLESCENCE..^^");
-else if(agey>=31&&agey<=60)
-print_string("\n^^..YOU ARE NOW IN YOUNG STAGE..^^");
-else 
-print_string("\n^^..YOU ARE NOW IN THE OLD AGE STAGE..^^"); 
-
-
-
-
-
+    
+ 
 
 }
 
 void power()
 { 
-clear_screen();
-init_vga_fore(BLACK);
-print_string("\n^^... Enter The Base ...^^^ ");
-sleep(CALC_SLEEP);
-init_vga_fore(RED);
-int base=read_int();
-
-init_vga_fore(BLACK);
-print_string("\n^^... Enter The power ...^^ ");
-sleep(CALC_SLEEP);
-init_vga_fore(RED);
-int power=read_int();
-
-int result=1;
-
-while(power!=0){
-
-result=result*base;
-power--;
-}
-init_vga_fore(RED);
-print_string("\n\n^^...The Result : ");
-print_int(result);
-print_string(" ...^^\n");
+   clear_screen();
+  init_vga_fore(BLACK);
+  print_string("\n^^... Enter The Base ...^^^ ");
+  sleep(CALC_SLEEP);
+  init_vga_fore(RED);
+  int base=read_int();
+ 
+  init_vga_fore(BLACK);
+  print_string("\n^^... Enter The power ...^^ ");
+  sleep(CALC_SLEEP);
+  init_vga_fore(RED);
+  int power=read_int();
+  
+  int result=1;
+  
+  while(power!=0){
+    
+   result=result*base;
+   power--;
+  }
+  init_vga_fore(RED);
+  print_string("\n\n^^...The Result : ");
+  print_int(result);
+  print_string("  ...^^\n");
 }
 
 
@@ -539,7 +539,7 @@ void display(){
 print_string("^^.........................................................................^^");
 
 
-print_string("\n\n\n ");
+print_string("\n\n\n            ");
 print_string("^^......");
 init_vga_fore(BLUE);
 print_string("W");init_vga_fore(GREEN);
@@ -550,16 +550,16 @@ print_string("C");init_vga_fore(BROWN);
 print_string("O");init_vga_fore(GREY);
 print_string("M");init_vga_fore(DARK_GREY);
 
-print_string(" ");
+print_string("  ");
 print_string("T");init_vga_fore(BRIGHT_GREEN);
 print_string("O");init_vga_fore(BRIGHT_CYAN);
 
-print_string(" ");
+print_string("  ");
 print_string("M");init_vga_fore(BRIGHT_RED);
 print_string("Y");init_vga_fore(BRIGHT_MAGENTA);
 
 
-print_string(" ");
+print_string("  ");
 print_string("O");init_vga_fore(CYAN);
 print_string("P");init_vga_fore(CYAN);
 print_string("E");init_vga_fore(RED);
@@ -568,7 +568,7 @@ print_string("A");init_vga_fore(BROWN);
 print_string("T");init_vga_fore(GREY);
 print_string("I");init_vga_fore(DARK_GREY);
 print_string("G");init_vga_fore(RED);
-print_string(" ");
+print_string("  ");
 print_string("S");init_vga_fore(BRIGHT_BLUE);
 print_string("Y");init_vga_fore(BRIGHT_RED);
 print_string("S");init_vga_fore(BRIGHT_GREEN);
@@ -578,13 +578,13 @@ print_string("M");init_vga_fore(BLACK);
 
 print_string("......^^\n\n\n");
 
-print_string(" ^^......");
+print_string("                      ^^......");
 print_string("G");init_vga_fore(BLUE);
 print_string("A");init_vga_fore(GREEN);
 print_string("I");init_vga_fore(RED);
 print_string("N");init_vga_fore(MAGENTA);
 print_string("T");init_vga_fore(GREY);
-print_string(" ");
+print_string("  ");
 print_string("T");init_vga_fore(BRIGHT_CYAN);
 print_string("E");init_vga_fore(BRIGHT_MAGENTA);
 print_string("A");init_vga_fore(BRIGHT_RED);
@@ -592,85 +592,127 @@ print_string("M");init_vga_fore(RED);
 print_string("......^^\n\n");
 
 init_vga_fore(GREEN);
-print_string("\n\n^^..IT WAS CREATED BY:\n\n E");init_vga_fore(BRIGHT_MAGENTA);
+print_string("\n\n^^..IT WAS CREATED BY:\n\n    E");init_vga_fore(BRIGHT_MAGENTA);
 print_string("N");init_vga_fore(CYAN);
 print_string("G");init_vga_fore(BRIGHT_RED);
 print_string(" : ");init_vga_fore(RED);
-print_string("HUDA ABDALLA ALJAZZAR");
+print_string("HUDA  ABDALLA ALJAZZAR");
 
 init_vga_fore(MAGENTA);
-print_string("\n\n\n E");init_vga_fore(BRIGHT_MAGENTA);
+print_string("\n\n\n    E");init_vga_fore(BRIGHT_MAGENTA);
 print_string("N");init_vga_fore(MAGENTA);
 print_string("G");init_vga_fore(CYAN);
 print_string(" : ");init_vga_fore(RED);
 print_string("NOUR OSAMA ABO ANZA");
 
-init_vga_fore(BLACK);
-print_string("\n\n\n \n\n\n\n\n\n >>> Press any key to reload screen <<<");
-getchar();
-clear_screen();
+    init_vga_fore(BLACK);
+    print_string("\n\n\n \n\n\n\n\n\n               >> Press any key to reload screen <<");
+    getchar();
+    clear_screen();
 
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void authorized(){
-init_vga_fore(BLACK);
+ init_vga_fore(BRIGHT_MAGENTA);
+print_string("\n      ^  ^  Dear User ...! Please Enter Username and passward  ^  ^  ");
+
+
+ init_vga_fore(RED);
 print_string("\n\n\n");
-print_string("^^.........................................................................^^\n\n\n");
+print_string("                 ^_^..........................................^_^\n\n\n");
 
-init_vga_fore(GREEN);
-print_string(" ^..Enter UserName : ");
+ init_vga_fore(BLUE);
+print_string("                              ^..Enter UserName : ");
+
+ init_vga_fore(BLACK);
+ sleep(CALC_SLEEP);
+ int t=read_int(); 
+ sleep(CALC_SLEEP);
+
+
+ init_vga_fore(BLUE);
+ print_string("\n\n\n                              ^..Enter Password : ");
+ init_vga_fore(BLACK);
+ int b=read_int();
+     
 
 init_vga_fore(RED);
-sleep(CALC_SLEEP);
-int t=read_int();;
-sleep(CALC_SLEEP);
+    
+print_string("\n\n\n                 ^_^..........................................^_^");
 
 
-init_vga_fore(GREEN);
-print_string(" \n\n\n ^..Enter Password : ");
-init_vga_fore(RED);
-int b=read_int();
-
-while(b!=1234)
-{
-sleep(CALC_SLEEP);
-print_string("\n\n ERROR PASSWORD ...!!");
-init_vga_fore(GREEN);
-print_string("\n\n\n ^..ReEnter Password : ");
-init_vga_fore(RED);
-b=read_int();
-
+while(b!=1234 || t!=23011)
+{            
+      print_string("\n\n                               ERROR PASSWORD ...!!");     
+      sleep(CALC_SLEEP);
+      init_vga_fore(BLACK);
+      print_string("\n\n\n\n Press any key to reload authentication screen ...!");
+      getchar();
+      clear_screen();      
+      authorized();           
 }
 
-init_vga_fore(BLACK);
-print_string("\n\n\n^^.........................................................................^^");
-init_vga_fore(BLACK);
-print_string("\n\n\n\n\n\n\n\n Press any key to reload screen ...!");
-getchar();
 
-clear_screen();
+    init_vga_fore(BLACK);
+    print_string("\n\n\n\n\n\n\n\n Press any key to reload screen ...!");
+    getchar();
+      
+    clear_screen();
 
+  
+  
 
-
-
-
+    
 }
+
+
 
 
 
 void kernel_entry()
 {
-init_vga(BLACK, WHITE);
-int num;
+  init_vga(BLACK, WHITE);
+  int num,r;
 
-display();
-authorized();
-while(1&& num!=4){
+   display();
+   authorized();
+sleep(CALC_SLEEP);
+while(1 && num!=4 && r!=2){
 init_vga_fore(BLACK);
-print_string(" ^^... MENU APP ...^^\n\n\n");
+print_string("     ^^... MENU APP ...^^\n\n\n");
 init_vga_fore(RED);
 print_string("1-^..Calculat Age Aplication..^\n\n");
 print_string("2-^..Find Max Element In Array And Sum Of Their Elements..^\n\n");
@@ -679,38 +721,64 @@ init_vga_fore(BLACK);
 print_string("\n^..Enter choice..^\n");
 init_vga_fore(RED);
 sleep(CALC_SLEEP);
-num=read_int();
+ num=read_int();
 
 switch(num)
-{
+ {
 
-case 1:calcualte_age();break;
+  case 1:calcualte_age();break;
 
-case 2:array_sum();break;
+  case 2:array_sum();break;
 
-case 3:power();break;
+  case 3:power();break;
+ 
+  case 4:print_string("\n\nEXIT..");
+         clear_screen();
+          print_string("\n\n\n\n\n\n                    ^^....G");init_vga_fore(BLUE);
+          print_string("O");init_vga_fore(GREEN);
+          print_string("O");init_vga_fore(MAGENTA);
+          print_string("D");init_vga_fore(BRIGHT_MAGENTA);
+          print_string("  B");init_vga_fore(DARK_GREY);
+          print_string("U");init_vga_fore(CYAN);
+          print_string("Y....^^");init_vga_fore(RED);  
+ 
+         break;
 
-case 4:print_string("\n\nEXIT..");
+  default:print_string("...Wrong input...");
+
+ }
+    
 clear_screen();
-print_string("\n\n\n\n ^^....G");init_vga_fore(BLUE);
-print_string("O");init_vga_fore(GREEN);
-print_string("O");init_vga_fore(MAGENTA);
-print_string("D");init_vga_fore(BRIGHT_MAGENTA);
-print_string(" B");init_vga_fore(DARK_GREY);
-print_string("U");init_vga_fore(CYAN);
-print_string("Y....^^");init_vga_fore(RED); 
 
-break;
+sleep(CALC_SLEEP);
+sleep(CALC_SLEEP);
 
-default:print_string("...Wrong input...");
+ init_vga_fore(RED);
+print_string("\n\n\n");
+print_string("                 ^_^..........................................^_^\n\n\n");
+
+ init_vga_fore(BLUE);
+ print_string("                              1-REBOOT ");
+ print_string("\n\n\n                              2-SHUTDOWN ");
+ 
+    
+init_vga_fore(RED);
+    
+print_string("\n\n\n                 ^_^..........................................^_^");
+
+    init_vga_fore(BLACK);
+    print_string("\n\n\n  ^^ ... Enter choice :");
+    r=read_int();
+   
+    init_vga_fore(BRIGHT_MAGENTA);
+    print_string("\n\n\nPress any key to reload screen ...!");
+    getchar();
+        
+
+clear_screen();
+
 
 }
 
 
-init_vga_fore(BRIGHT_MAGENTA);
-print_string("\n\n\nPress any key to reload screen ...!");
-getchar();
-clear_screen();
 }
-} 
-
