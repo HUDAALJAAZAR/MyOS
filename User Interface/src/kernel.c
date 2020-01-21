@@ -710,7 +710,7 @@ void kernel_entry()
    display();
    authorized();
 sleep(CALC_SLEEP);
-while(1 && num!=4 && r!=2){
+while(1 && num!=4 && r!=3){
 init_vga_fore(BLACK);
 print_string("     ^^... MENU APP ...^^\n\n\n");
 init_vga_fore(RED);
@@ -759,8 +759,9 @@ print_string("                 ^_^..........................................^_^\
 
  init_vga_fore(BLUE);
  print_string("                              1-REBOOT ");
- print_string("\n\n\n                              2-SHUTDOWN ");
- 
+ print_string("\n\n\n                              2-SLEEP ");
+  print_string("\n\n\n                              3-SHUTDOWN ");
+
     
 init_vga_fore(RED);
     
@@ -769,11 +770,19 @@ print_string("\n\n\n                 ^_^........................................
     init_vga_fore(BLACK);
     print_string("\n\n\n  ^^ ... Enter choice :");
     r=read_int();
+   if(r==3){
+   sleep(CALC_SLEEP);
+   sleep(CALC_SLEEP);
+  sleep(CALC_SLEEP);
+init_vga_fore(BRIGHT_MAGENTA);
+    print_string("\n\n\n\n\n\n\n\n\n\nPress any key to reload screen ...!");
+    getchar();
    
+   }else{
     init_vga_fore(BRIGHT_MAGENTA);
     print_string("\n\n\nPress any key to reload screen ...!");
     getchar();
-        
+   }
 
 clear_screen();
 
